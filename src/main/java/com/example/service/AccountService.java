@@ -16,15 +16,6 @@ public class AccountService {
     @Autowired
     private AccountRepository accountRepository;
 
-    @PostConstruct
-    public void init() {
-        // Ensure account with accountId 9999 exists for testing
-        accountRepository.findById(9999).orElseGet(() -> {
-            Account predefinedAccount = new Account("testuser9999", "password");
-            return accountRepository.save(predefinedAccount);
-        });
-    }
-
     public Account registerAccount(Account account) {
         if (account.getUsername() == null || account.getUsername().isBlank()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username cannot be blank");
